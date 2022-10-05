@@ -7,6 +7,8 @@
 //ASSERT(condition) shows the error if condition == FALSE
 #include "MyAssert.cpp"//conditional compilation
 
+#include "TestingSystem.cpp"
+
 const double zero = 0.00000001;
 
 //test: checks if the solutions of equation equal y1 and y2
@@ -40,7 +42,7 @@ int SolveLinear(double b, double c, double* x1);
 
 int main()
 {
-    //tester();//remove comment to use autotesting
+    TEST_SYSTEM;
     printInfo();
     char comand[5];
     char YES[5] = "YES";
@@ -206,41 +208,52 @@ void printInfo()
 //TESTING SYSTEM
 //Remove comments below to use autotesting
 
-/*
+
 void tester()
 {
+    printf("if a = 0, b = 0, c = 0: ");
     if(test(0, 0, 0, NAN, NAN)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 0, b = 0, c = 1: ");
     if(test(0, 0, 1, NAN, NAN)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 0, b = 1, c = 0: ");
     if(test(0, 1, 0, 0, NAN)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 0, b = 1, c = 1: ");
     if(test(0, 1, 1, -1, NAN)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 1, b = 0, c = 0: ");
     if(test(1, 0, 0, 0, NAN)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 1, b = 0, c = 1: ");
     if(test(1, 0, 1, NAN, NAN)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 1, b = 1, c = 0: ");
     if(test(1, 1, 0, 0, -1)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 1, b = 1, c = 1: ");
     if(test(1, 1, 1, NAN, NAN)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 1, b = 0, c = -1: ");
     if(test(1, 0, -1, 1, -1)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 1, b = 3, c = 2: ");
     if(test(1, 3, 2, -1, -2)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 
+    printf("if a = 1, b = 2, c = 1: ");
     if(test(1, 2, 1, -1, NAN)){printf("YES\n");}
-    else{printf("NO, FUCK YOU\n");}
+    else{printf("NO\n");}
 }
 
 
@@ -260,6 +273,6 @@ int test(double a, double b, double c, double y1, double y2)
     else if(isfinite(x1) && isfinite(y1) && isnan(x2) && isnan(y2) && (fabs(x1 - y1) < zero)){return 1;}
     else{return 0;}
 }
-*/
+
 
 
