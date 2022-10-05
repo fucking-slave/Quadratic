@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
-
-
-
-
+#include <ctype.h>
 
 const double zero = 0.00000001;
 
@@ -14,22 +11,32 @@ int test(double a, double b, double c, double y1, double y2);
 //tester: prints result of all tests
 void tester();
 
+//printInfo: prints info about the contributor
 void printInfo();
 
-void scanArg(double* a, double* b, double* c);
+//scanArgs: inputing value of a, b, c
+void scanArgs(double* a, double* b, double* c);
+
+//getArg: inputs value of a
+//getArg: returns 1 if value is correct(opposite: 0)
+int getArg(double *a);
 
 //Solver: returns number_of_roots, returning -1 means infinite number of roots
 //SOlver: x1 - maxRoot x2 - minRoot(if number_of_roots is 2)
 int Solver(double a, double b, double c, double* x1, double* x2);
 
+//SolveQuadratic: solves quadratic equation and returns number of roots
+//SolveQuadratic: x1 - maxRoot x2 - minRoot(if number_of_roots is 2)
 int SolveQuadratic(double a, double b, double c, double* x1, double* x2);
 
+//SolveLinear: solves linear equation
+//Returns number of roots, returning -1 means infinite number of roots
 int SolveLinear(double b, double c, double* x1);
 
 
 int main()
 {
-    tester();//Comment this to use autotesting
+    //tester();//remove comment to use autotesting
     printInfo();
     char comand[5];
     char YES[5] = "YES";
@@ -37,7 +44,7 @@ int main()
     {
         printf("\n");
         double a = 0, b = 0, c = 0;
-        scanArg(&a, &b, &c);
+        scanArgs(&a, &b, &c);
 
         double x1 = NAN, x2 = NAN;
         int num_of_roots = Solver(a, b, c, &x1, &x2);
@@ -54,6 +61,8 @@ int main()
     } while(!strcmp(comand, YES));
     return 0;
 }
+
+//SOLVING FUNCTIONS
 
 int Solver(double a, double b, double c, double* x1, double* x2)
 {
@@ -95,34 +104,87 @@ int SolveLinear(double b, double c, double* x1)
 
 
 
-//later
+//NON-SOLVING FUNCTIONS
 
 
-void scanArg(double* a, double* b, double* c)    //óïðîñòèòü
+void scanArgs(double* a, double* b, double* c)
 {
-    printf("Enter a: ");
-    while(scanf("%lf", a) != 1)
+    printf("Enter a:");
+    while(!getArg(a))
     {
-        printf("\nERROR, the value is wrong\n");
-        printf("Enter a: ");
-        fflush(stdin);
+        printf("ERROR, the value is wrong\n");
+        printf("Enter a:");
     }
 
-    printf("Enter b: ");
-    while(scanf("%lf", b) != 1)
+    printf("Enter b:");
+    while(!getArg(b))
     {
-        fflush(stdin);
-        printf("\nERROR, the value is wrong\n");
-        printf("Enter b: ");
+        printf("ERROR, the value is wrong\n");
+        printf("Enter b:");
     }
 
-    printf("Enter c: ");
-    while(scanf("%lf", c) != 1)
+    printf("Enter c:");
+    while(!getArg(c))
     {
-        fflush(stdin);
-        printf("\nERROR, the value is wrong\n");
-        printf("Enter c: ");
+        printf("ERROR, the value is wrong\n");
+        printf("Enter c:");
     }
+}
+
+int getArg(double* a)
+{
+    char str[1000] = "";
+    scanf("%s", str);
+    int length = strlen(str);
+
+    int flag = 1, cnt = 0, dot_flag = 1;
+    char* index = str;
+    if(*index == '-'){index++;}
+
+    if(*index == '0' && *(index + 1) != '.')
+    {
+        flag = 0;
+    }
+    else
+    {
+         for(; index != str + length; index++)
+        {
+            if(!isdigit(*index) && (*index != '.'))
+            {
+                flag = 0;
+                break;
+            }
+            if((index == str + length - 1) && (*index == '.'))
+            {
+                flag = 0;
+                break;
+            }
+            if(isdigit(*index)){cnt++;}
+            else if(*index == '.' && (cnt > 0) && dot_flag)
+            {
+                dot_flag = 0;
+            }
+            else
+            {
+                flag = 0;
+                break;
+            }
+        }
+    }
+
+    if(flag)
+    {
+        for(char* ind = str + length - 1; ind >= str; ind--)
+        {
+            ungetc(*(ind), stdin);
+        }
+        double b = NAN;
+        scanf("%lf", &b);
+        *a = b;
+        return 1;
+    }
+    else{return 0;}
+
 }
 
 void printInfo()
@@ -134,6 +196,7 @@ void printInfo()
 //TESTING SYSTEM
 //Remove comments below to use autotesting
 
+/*
 void tester()
 {
     if(test(0, 0, 0, NAN, NAN)){printf("YES\n");}
@@ -187,3 +250,6 @@ int test(double a, double b, double c, double y1, double y2)
     else if(isfinite(x1) && isfinite(y1) && isnan(x2) && isnan(y2) && (fabs(x1 - y1) < zero)){return 1;}
     else{return 0;}
 }
+*/
+
+
