@@ -2,6 +2,10 @@
 #include <math.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
+
+//ASSERT(condition) shows the error if condition == FALSE
+#include "MyAssert.cpp"//conditional compilation
 
 const double zero = 0.00000001;
 
@@ -11,7 +15,7 @@ int test(double a, double b, double c, double y1, double y2);
 //tester: prints result of all tests
 void tester();
 
-//printInfo: prints info about the contributor
+//printInfo: prints info about the contributor(or developer)
 void printInfo();
 
 //scanArgs: inputing value of a, b, c
@@ -66,6 +70,8 @@ int main()
 
 int Solver(double a, double b, double c, double* x1, double* x2)
 {
+    ASSERT(x1 != x2 && x1 != NULL && x2 != NULL);
+
     if(fabs(a) > zero){return SolveQuadratic(a, b, c, x1, x2);}
     else
     {
@@ -80,6 +86,8 @@ int Solver(double a, double b, double c, double* x1, double* x2)
 
 int SolveQuadratic(double a, double b, double c, double* x1, double* x2)
 {
+    ASSERT(x1 != x2 && x1 != NULL && x2 != NULL);
+
     if(fabs(a) < zero){return SolveLinear(b, c, x1);}
 
     double discr = b*b - 4*a*c;
@@ -92,6 +100,7 @@ int SolveQuadratic(double a, double b, double c, double* x1, double* x2)
 
 int SolveLinear(double b, double c, double* x1)
 {
+    ASSERT(x1 != NULL);
     if(fabs(b) < zero)
     {
         if(fabs(c) > zero){return 0;}
@@ -109,6 +118,7 @@ int SolveLinear(double b, double c, double* x1)
 
 void scanArgs(double* a, double* b, double* c)
 {
+    ASSERT(a != b && b != c && a != c && a != NULL && b != NULL && c != NULL);
     printf("Enter a:");
     while(!getArg(a))
     {
@@ -133,6 +143,7 @@ void scanArgs(double* a, double* b, double* c)
 
 int getArg(double* a)
 {
+    ASSERT(a != NULL);
     char str[1000] = "";
     scanf("%s", str);
     int length = strlen(str);
@@ -140,8 +151,8 @@ int getArg(double* a)
     int flag = 1, cnt = 0, dot_flag = 1;
     char* index = str;
     if(*index == '-'){index++;}
-
-    if(*index == '0' && *(index + 1) != '.')
+    if(*index == '0' && length == 1){flag = 1;}
+    else if(*index == '0' && *(index + 1) != '.')
     {
         flag = 0;
     }
@@ -184,7 +195,6 @@ int getArg(double* a)
         return 1;
     }
     else{return 0;}
-
 }
 
 void printInfo()
