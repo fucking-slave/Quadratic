@@ -5,11 +5,13 @@
 #include <stdlib.h>
 
 //ASSERT(condition) shows the error if condition == FALSE
-#include "MyAssert.cpp"//conditional compilation
+#include "myAssert.cpp"//conditional compilation
 
 #include "TestingSystem.cpp"
 
 const double zero = 0.00000001;
+
+void mainSolvingFunction();
 
 //test: checks if the solutions of equation equal y1 and y2
 int test(double a, double b, double c, double y1, double y2);
@@ -44,6 +46,14 @@ int main()
 {
     TEST_SYSTEM;
     printInfo();
+    mainSolvingFunction();
+    return 0;
+}
+
+//SOLVING FUNCTIONS
+
+void mainSolvingFunction()
+{
     char comand[5];
     char YES[5] = "YES";
     do
@@ -65,10 +75,7 @@ int main()
         printf("Do you want to solve another?(YES/NO)\n");
         scanf("%s", comand);
     } while(!strcmp(comand, YES));
-    return 0;
 }
-
-//SOLVING FUNCTIONS
 
 int Solver(double a, double b, double c, double* x1, double* x2)
 {
@@ -201,7 +208,7 @@ int getArg(double* a)
 
 void printInfo()
 {
-    printf("Hello, I'm Dima\nThis function solves the quadratic equation\nQuadratic equation looks like:\n\ax^2 + bx + c = 0\n");
+    printf("Hello, I'm Dima\nThis function solves the quadratic equation\nQuadratic equation looks like:\nax^2 + bx + c = 0\n");
 }
 
 
